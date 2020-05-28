@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ideal.project.mapper.AnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.ideal.project.entity.Answer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="question_id" property="questionId" jdbcType="BIGINT" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="login_code" property="loginCode" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="questionnaire" property="questionnaire" jdbcType="VARCHAR" />
+    <result column="recover_date" property="recoverDate" jdbcType="TIMESTAMP" />
+    <result column="export_date" property="exportDate" jdbcType="TIMESTAMP" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="question_type" property="questionType" jdbcType="VARCHAR" />
+    <result column="duration" property="duration" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, question_id, answer, login_code, group_name, project_name, task_name, questionnaire, 
+    recover_date, export_date, question, question_type, duration
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_answer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_answer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ideal.project.entity.Answer" >
+    insert into t_answer (id, question_id, answer, 
+      login_code, group_name, project_name, 
+      task_name, questionnaire, recover_date, 
+      export_date, question, question_type, 
+      duration)
+    values (#{id,jdbcType=BIGINT}, #{questionId,jdbcType=BIGINT}, #{answer,jdbcType=VARCHAR}, 
+      #{loginCode,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{taskName,jdbcType=VARCHAR}, #{questionnaire,jdbcType=VARCHAR}, #{recoverDate,jdbcType=TIMESTAMP}, 
+      #{exportDate,jdbcType=TIMESTAMP}, #{question,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR}, 
+      #{duration,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertAnswerList" parameterType="java.util.List">
+    insert into t_answer (id, question_id, answer,
+      login_code, group_name, project_name,
+      task_name, questionnaire, recover_date,
+      export_date, question, question_type,
+      duration)
+    values
+    <foreach collection="list" item="answer" index="index" separator=",">
+      (null , #{answer.questionId,jdbcType=BIGINT}, #{answer.answer,jdbcType=VARCHAR},
+      #{answer.loginCode,jdbcType=VARCHAR}, #{answer.groupName,jdbcType=VARCHAR}, #{answer.projectName,jdbcType=VARCHAR},
+      #{answer.taskName,jdbcType=VARCHAR}, #{answer.questionnaire,jdbcType=VARCHAR}, #{answer.recoverDate,jdbcType=TIMESTAMP},
+      #{answer.exportDate,jdbcType=TIMESTAMP}, #{answer.question,jdbcType=VARCHAR}, #{answer.questionType,jdbcType=VARCHAR},
+      #{answer.duration,jdbcType=VARCHAR})
+    </foreach>
+
+  </insert>
+  <insert id="insertSelective" parameterType="com.ideal.project.entity.Answer" >
+    insert into t_answer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="loginCode != null" >
+        login_code,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="questionnaire != null" >
+        questionnaire,
+      </if>
+      <if test="recoverDate != null" >
+        recover_date,
+      </if>
+      <if test="exportDate != null" >
+        export_date,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="questionType != null" >
+        question_type,
+      </if>
+      <if test="duration != null" >
+        duration,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="questionId != null" >
+        #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCode != null" >
+        #{loginCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaire != null" >
+        #{questionnaire,jdbcType=VARCHAR},
+      </if>
+      <if test="recoverDate != null" >
+        #{recoverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exportDate != null" >
+        #{exportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ideal.project.entity.Answer" >
+    update t_answer
+    <set >
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="loginCode != null" >
+        login_code = #{loginCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaire != null" >
+        questionnaire = #{questionnaire,jdbcType=VARCHAR},
+      </if>
+      <if test="recoverDate != null" >
+        recover_date = #{recoverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exportDate != null" >
+        export_date = #{exportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        duration = #{duration,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ideal.project.entity.Answer" >
+    update t_answer
+    set question_id = #{questionId,jdbcType=BIGINT},
+      answer = #{answer,jdbcType=VARCHAR},
+      login_code = #{loginCode,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      questionnaire = #{questionnaire,jdbcType=VARCHAR},
+      recover_date = #{recoverDate,jdbcType=TIMESTAMP},
+      export_date = #{exportDate,jdbcType=TIMESTAMP},
+      question = #{question,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=VARCHAR},
+      duration = #{duration,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

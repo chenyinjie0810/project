@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ideal.project.mapper.QuestionMapper">
+    <resultMap id="BaseResultMap" type="com.ideal.project.entity.Question">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="day_number" property="dayNumber" jdbcType="VARCHAR"/>
+        <result column="sort_number" property="sortNumber" jdbcType="INTEGER"/>
+        <result column="question" property="question" jdbcType="VARCHAR"/>
+        <result column="question_desc" property="questionDesc" jdbcType="VARCHAR"/>
+        <result column="question_type" property="questionType" jdbcType="VARCHAR"/>
+        <result column="answer" property="answer" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="modify_date" property="modifyDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, day_number, sort_number, question, question_desc, question_type, answer, create_date, 
+    modify_date
+  </sql>
+
+    <insert id="insertQuqestionList" parameterType="java.util.List">
+       insert into t_question (id ,day_number, sort_number,
+      question, question_desc, question_type,
+      answer, create_date, modify_date
+      ) values
+      <foreach collection="list" item="question" index="index" separator="," >
+      (
+      null,
+      #{question.dayNumber},
+      #{question.sortNumber},
+      #{question.question},
+      #{question.questionDesc},
+      #{question.questionType},
+      #{question.answer},
+      now(),
+      now()
+      )
+      </foreach>
+  </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_question
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_question
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.ideal.project.entity.Question">
+    insert into t_question (id, day_number, sort_number, 
+      question, question_desc, question_type, 
+      answer, create_date, modify_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{dayNumber,jdbcType=VARCHAR}, #{sortNumber,jdbcType=INTEGER}, 
+      #{question,jdbcType=VARCHAR}, #{questionDesc,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{modifyDate,jdbcType=DATE}
+      )
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.ideal.project.entity.Question">
+        insert into t_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dayNumber != null">
+                day_number,
+            </if>
+            <if test="sortNumber != null">
+                sort_number,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="questionDesc != null">
+                question_desc,
+            </if>
+            <if test="questionType != null">
+                question_type,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="dayNumber != null">
+                #{dayNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNumber != null">
+                #{sortNumber,jdbcType=INTEGER},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="questionDesc != null">
+                #{questionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="questionType != null">
+                #{questionType,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ideal.project.entity.Question">
+        update t_question
+        <set>
+            <if test="dayNumber != null">
+                day_number = #{dayNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="sortNumber != null">
+                sort_number = #{sortNumber,jdbcType=INTEGER},
+            </if>
+            <if test="question != null">
+                question = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="questionDesc != null">
+                question_desc = #{questionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="questionType != null">
+                question_type = #{questionType,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ideal.project.entity.Question">
+    update t_question
+    set day_number = #{dayNumber,jdbcType=VARCHAR},
+      sort_number = #{sortNumber,jdbcType=INTEGER},
+      question = #{question,jdbcType=VARCHAR},
+      question_desc = #{questionDesc,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      modify_date = #{modifyDate,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
